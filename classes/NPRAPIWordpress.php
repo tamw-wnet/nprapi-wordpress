@@ -74,7 +74,7 @@ class NPRAPIWordpress extends NPRAPI {
 				if ( $response['body'] ) {
 					$this->xml = $response['body'];
 				} else {
-					$this->notice[] = __( 'No data available.' );
+					$this->notices[] = __( 'No data available.' );
 				}
 			} else {
 				nprstory_show_message( 'An error occurred pulling your story from the NPR API.  The API responded with message =' . $response['response']['message'], TRUE );
@@ -747,7 +747,7 @@ class NPRAPIWordpress extends NPRAPI {
 	 * This function will check a story to see if there are transcripts that should go with it, if there are
 	 * we'll return the transcript as one big string with Transcript at the top and each paragraph separated by <p>
 	 *
-	 * @param string $story
+	 * @param object $story
 	 * @return string
 	 */
 	function get_transcript_body( $story ) {
