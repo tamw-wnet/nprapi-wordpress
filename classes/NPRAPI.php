@@ -313,6 +313,7 @@ class NPRMLElement {
 	public $value;
 	public $paragraphs;
 	public $mp3;
+	public $type;
 	function __toString() {
 		return $this->value;
 	}
