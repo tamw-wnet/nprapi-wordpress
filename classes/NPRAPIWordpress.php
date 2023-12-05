@@ -124,7 +124,7 @@ class NPRAPIWordpress extends NPRAPI {
 				$post_mod_date = strtotime( date( 'Y-m-d H:i:s' ) );
 				$post_pub_date = $post_mod_date;
 				$cats = [];
-				if ( $exists->found_posts ) {
+				if ( $exists->posts ) {
 					$existing = $exists->post;
 					$post_id = $existing->ID;
 					$existing_status = $exists->posts[0]->post_status;
