@@ -1,4 +1,5 @@
 release/
 vendor/
 .vscode/
-wp
+.idea/
+bin/
