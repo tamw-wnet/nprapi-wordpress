@@ -2,7 +2,7 @@
 /**
  * Plugin Name: NPR Story API
  * Description: A collection of tools for reusing content from NPR.org, now maintained and updated by NPR member station developers
- * Version: 1.9.5
+ * Version: 1.9.5.1
  * Author: Open Public Media
  * License: GPLv2
 */
@@ -259,7 +259,7 @@ function nprstory_add_header_meta() {
 }
 add_action( 'wp_head', 'nprstory_add_header_meta', 100 );
 
-add_action('admin_notices', 'nprstory_cds_plugin_admin_notice');
+// add_action('admin_notices', 'nprstory_cds_plugin_admin_notice');
 
 function nprstory_cds_plugin_admin_notice() {
 	global $pagenow;
