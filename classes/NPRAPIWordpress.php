@@ -74,7 +74,7 @@ class NPRAPIWordpress extends NPRAPI {
 				if ( $response['body'] ) {
 					$this->xml = $response['body'];
 				} else {
-					$this->notice[] = __( 'No data available.' );
+					$this->notices[] = __( 'No data available.' );
 				}
 			} else {
 				nprstory_show_message( 'An error occurred pulling your story from the NPR API.  The API responded with message =' . $response['response']['message'], TRUE );
@@ -336,24 +336,30 @@ class NPRAPIWordpress extends NPRAPI {
 							// check the <enlargement> and then the crops, in this order "enlargement", "standard"  if they don't exist, just get the image->src
 							if ( !empty( $image->enlargement ) ) {
 								$image_url = $image->enlargement->src;
-							} else {
-								if ( !empty( $image->crop ) && is_array( $image->crop ) ) {
+							}
+							if ( !empty( $image->crop ) && is_array( $image->crop ) ) {
+								foreach ( $image->crop as $crop ) {
+									if ( empty( $crop->type ) ) {
+										continue;
+									}
+									if ( 'enlargement' === $crop->type ) {
+										$image_url = $crop->src;
+										// sometimes enlargements are much larger than needed
+										if ( ( 1500 < $crop->height ) || ( 2000 < $crop->width ) ) {
+											// if there's no querystring already, add s=6 which media.npr.org resizes to a usable but large size
+											if ( strpos( $image_url, "?" ) === false ) {
+												$image_url .= "?s=6";
+											}
+										}
+									}
+								}
+								if ( empty( $image_url ) ) {
 									foreach ( $image->crop as $crop ) {
 										if ( empty( $crop->type ) ) {
 											continue;
 										}
-										if ( 'enlargement' === $crop->type ) {
+										if ( 'standard' === $crop->type ) {
 											$image_url = $crop->src;
-										}
-									}
-									if ( empty( $image_url ) ) {
-										foreach ( $image->crop as $crop ) {
-											if ( empty( $crop->type ) ) {
-												continue;
-											}
-											if ( 'standard' === $crop->type ) {
-												$image_url = $crop->src;
-											}
 										}
 									}
 								}
@@ -741,7 +747,7 @@ class NPRAPIWordpress extends NPRAPI {
 	 * This function will check a story to see if there are transcripts that should go with it, if there are
 	 * we'll return the transcript as one big string with Transcript at the top and each paragraph separated by <p>
 	 *
-	 * @param string $story
+	 * @param object $story
 	 * @return string
 	 */
 	function get_transcript_body( $story ) {

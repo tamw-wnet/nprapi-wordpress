@@ -5,8 +5,8 @@ A collection of tools for publishing from and to NPR's Story API. [Find this plu
 - Contributors: jwcounts, tamw-wnet, bdivver
 - Original developers: NPRDS, INN Labs
 - Requires at least: 3.8.14
-- Tested up to: 6.0
-- Stable tag: 1.9.4.1
+- Tested up to: 6.1
+- Stable tag: 1.9.5
 - License: GPLv2
 - License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -70,6 +70,10 @@ NPR Stories having got gotten
 ## Changelog
 
 <!-- copy from readme.txt to here -->
+### V1.9.5
+* Added a check for image dimensions for imported article thumbnails, and use NPR resizer if necessary (credit to [@tamw-wnet](https://github.com/tamw-wnet) for the catch and PR) [PR #22](https://github.com/OpenPublicMedia/nprapi-wordpress/pull/22)
+* Added filter `npr_pre_article_push` to allow for modifying the organization ID or API key before pushing an article. Example: if you run a site with more than one org ID in the Story API and you want certain categories to push to certain IDs, you can create a function to hook into that filter and modify the org ID and API key as needed
+
 ### V1.9.4.1
 * Fixed an issue where updating imported articles was not also updating the post thumbnail (all credit to [@tamw-wnet](https://github.com/tamw-wnet) for the catch) [Issue #19](https://github.com/OpenPublicMedia/nprapi-wordpress/issues/19)
 
